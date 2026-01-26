@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "titolo_viaggio")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "Tipo di acquisto", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "Tipo_acquisto", discriminatorType = DiscriminatorType.STRING)
 public abstract class TitoloViaggio {
 
     @Id

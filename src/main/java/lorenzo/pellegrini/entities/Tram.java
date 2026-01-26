@@ -7,29 +7,16 @@ import jakarta.persistence.Entity;
 @Entity
 @DiscriminatorValue("tram")
 public class Tram extends Mezzo {
-@Column(name = "capacità")
-	private  int capacita;
 
 	public Tram(){
 	}
 
 	public Tram(StatoAttuale statoAttuale,int capacita) {
-		super(statoAttuale);
-		this.capacita = capacita;
-	}
-
-	public int getCapacita() {
-		return capacita;
-	}
-
-	public void setCapacita(int capacita) {
-		this.capacita = capacita;
+		super(statoAttuale, capacita);
 	}
 
 	@Override
 	public String toString() {
-		return "Tram{" +
-				"capacita=" + capacita +
-				'}'+super.toString();
+		return "Tram{} " + super.toString();
 	}
 }
