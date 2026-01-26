@@ -9,6 +9,9 @@
         <class>lorenzo.pellegrini.entities.Biglietto</class>
         <class>lorenzo.pellegrini.entities.Abbonamento</class>
         <class>lorenzo.pellegrini.enums.TipoAbbonamento</class>
+        <class>lorenzo.pellegrini.entities.Mezzo</class>
+        <class>lorenzo.pellegrini.entities.Tram</class>
+        <class>lorenzo.pellegrini.entities.Autobus</class>
        
 
         <properties>

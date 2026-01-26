@@ -9,8 +9,8 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 abstract class Mezzo {
 	@Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-	private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	@Column(name = "stato_attuale", nullable = false)
 	private StatoAttuale statoAttuale;
 
@@ -21,7 +21,7 @@ abstract class Mezzo {
 		this.statoAttuale = statoAttuale;
 	}
 
-	public UUID getId() {
+	public long getId() {
 		return id;
 	}
 
