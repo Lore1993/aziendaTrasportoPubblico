@@ -17,15 +17,16 @@ public abstract class TitoloViaggio {
     @Column(name = "data_emissione", nullable = false)
     private LocalDate dataEmissione;
 
-    @Column(name = "punto_vendita", nullable = false)
-    private long puntoVendita;
+    @ManyToOne
+    @JoinColumn(name = "punto_vendita_id", nullable = false)
+    private PuntoVendita puntoVendita;
 
     // Costruttore vuoto
     public TitoloViaggio() {
     }
 
     // Costruttore con parametri
-    public TitoloViaggio(LocalDate dataEmissione, long puntoVendita) {
+    public TitoloViaggio(LocalDate dataEmissione, PuntoVendita puntoVendita) {
         this.dataEmissione = dataEmissione;
         this.puntoVendita = puntoVendita;
     }
@@ -47,11 +48,11 @@ public abstract class TitoloViaggio {
         this.dataEmissione = dataEmissione;
     }
 
-    public long getPuntoVendita() {
+    public PuntoVendita getPuntoVendita() {
         return puntoVendita;
     }
 
-    public void setPuntoVendita(long puntoVendita) {
+    public void setPuntoVendita(PuntoVendita puntoVendita) {
         this.puntoVendita = puntoVendita;
     }
 
