@@ -16,6 +16,6 @@ public class DaoMezzi {
 		tx.begin();
 		em.persist(mezzo);
 		tx.commit();
-		System.out.println("il mezzo "+mezzo+" è stato ");
+		System.out.println("il mezzo "+mezzo+" è stato salvato");
 	}
 }
