@@ -1,12 +1,13 @@
 package lorenzo.pellegrini.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("tram")
 public class Tram extends Mezzo {
-
+@Column(name = "capacità")
 	private  int capacita;
 
 	public Tram(){
