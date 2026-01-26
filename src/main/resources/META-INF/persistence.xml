@@ -6,12 +6,8 @@
              version="3.2">
 
 
-    <persistence-unit name="epibookpu">
-        <class>lorenzo.pellegrini.Entities.LibraryCatalogue</class>
-        <class>lorenzo.pellegrini.Entities.Book</class>
-        <class>lorenzo.pellegrini.Entities.Magazine</class>
-        <class>lorenzo.pellegrini.Entities.User</class>
-        <class>lorenzo.pellegrini.Entities.LibraryLoan</class>
+    <persistence-unit name="aziendatrasportopubblicopu">
+
 
         <properties>
             <property name="jakarta.persistence.jdbc.url"
