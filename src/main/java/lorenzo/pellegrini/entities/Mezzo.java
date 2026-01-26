@@ -7,21 +7,28 @@ import java.util.UUID;
 @Entity
 @Table(name = "Mezzo")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-abstract class Mezzo {
+@DiscriminatorColumn(name = "tipo_mezzo", discriminatorType = DiscriminatorType.STRING)
+public abstract class Mezzo {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
+
+	@Enumerated(EnumType.STRING)
 	@Column(name = "stato_attuale", nullable = false)
 	private StatoAttuale statoAttuale;
+
+	@Column(name = "capacita")
+	private int capacita;
 
 	public Mezzo() {
 	}
 
-	public Mezzo(StatoAttuale statoAttuale) {
+	public Mezzo(StatoAttuale statoAttuale, int capacita) {
 		this.statoAttuale = statoAttuale;
+		this.capacita=capacita;
 	}
 
-	public long getId() {
+	public UUID getId() {
 		return id;
 	}
 

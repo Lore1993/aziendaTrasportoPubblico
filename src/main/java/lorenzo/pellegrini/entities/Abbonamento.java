@@ -14,8 +14,9 @@ public class Abbonamento extends TitoloViaggio {
     @Column(name = "tipo_abbonamento")
     private TipoAbbonamento tipoAbbonamento;
 
-    @Column(name = "tessera_id")
-    private long tesseraId;
+    @ManyToOne
+    @JoinColumn(name = "tessera_id") // Relazione Many-To-One con la tessera
+    private Tessera tessera;
 
     // Costruttore vuoto
     public Abbonamento() {
@@ -23,10 +24,10 @@ public class Abbonamento extends TitoloViaggio {
     }
 
     // Costruttore con super + istanze
-    public Abbonamento(LocalDate dataEmissione, long puntoVendita, TipoAbbonamento tipoAbbonamento, long tesseraId) {
+    public Abbonamento(LocalDate dataEmissione, PuntoVendita puntoVendita, TipoAbbonamento tipoAbbonamento, Tessera tessera) {
         super(dataEmissione, puntoVendita);
         this.tipoAbbonamento = tipoAbbonamento;
-        this.tesseraId = tesseraId;
+        this.tessera = tessera;
     }
 
     // Getter e Setter
@@ -38,12 +39,12 @@ public class Abbonamento extends TitoloViaggio {
         this.tipoAbbonamento = tipoAbbonamento;
     }
 
-    public long getTesseraId() {
-        return tesseraId;
+    public Tessera getTesseraId() {
+        return tessera;
     }
 
-    public void setTesseraId(long tesseraId) {
-        this.tesseraId = tesseraId;
+    public void setTesseraId(Tessera tessera) {
+        this.tessera = tessera;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class Abbonamento extends TitoloViaggio {
                 ", dataEmissione=" + getDataEmissione() +
                 ", puntoVendita=" + getPuntoVendita() +
                 ", tipoAbbonamento=" + tipoAbbonamento +
-                ", tesseraId=" + tesseraId +
+                ", tessera=" + tessera +
                 '}';
     }
 }

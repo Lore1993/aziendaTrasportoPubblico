@@ -1,8 +1,6 @@
 package lorenzo.pellegrini.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -13,8 +11,9 @@ public class Biglietto extends TitoloViaggio {
     @Column(name = "vidimato")
     private boolean vidimato;
 
-    @Column(name = "id_mezzo")
-    private Integer idMezzo;
+    @ManyToOne
+    @JoinColumn(name = "mezzo_id") // Collega il biglietto al mezzo fisico
+    private Mezzo mezzo;
 
     @Column(name = "data_vidimazione")
     private LocalDate dataVidimazione;
@@ -25,10 +24,10 @@ public class Biglietto extends TitoloViaggio {
     }
 
     // Costruttore con super + istanze
-    public Biglietto(LocalDate dataEmissione, long puntoVendita, boolean vidimato, Integer idMezzo, LocalDate dataVidimazione) {
+    public Biglietto(LocalDate dataEmissione, PuntoVendita puntoVendita, boolean vidimato,Mezzo mezzo, LocalDate dataVidimazione) {
         super(dataEmissione, puntoVendita);
         this.vidimato = vidimato;
-        this.idMezzo = idMezzo;
+        this.mezzo=mezzo;
         this.dataVidimazione = dataVidimazione;
     }
 
@@ -41,12 +40,12 @@ public class Biglietto extends TitoloViaggio {
         this.vidimato = vidimato;
     }
 
-    public Integer getIdMezzo() {
-        return idMezzo;
+    public Mezzo getIdMezzo() {
+        return mezzo;
     }
 
-    public void setIdMezzo(Integer idMezzo) {
-        this.idMezzo = idMezzo;
+    public void setIdMezzo(Mezzo mezzo) {
+        this.mezzo = mezzo;
     }
 
     public LocalDate getDataVidimazione() {
@@ -64,7 +63,7 @@ public class Biglietto extends TitoloViaggio {
                 ", dataEmissione=" + getDataEmissione() +
                 ", puntoVendita=" + getPuntoVendita() +
                 ", vidimato=" + vidimato +
-                ", idMezzo=" + idMezzo +
+                ", Mezzo=" + mezzo +
                 ", dataVidimazione=" + dataVidimazione +
                 '}';
     }
