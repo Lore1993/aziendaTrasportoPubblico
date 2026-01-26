@@ -9,5 +9,11 @@ public class Autobus extends Mezzo {
 
 	private int capacita;
 
+	public Autobus(){
+	}
+	public Autobus(StatoAttuale statoAttuale, int capacita) {
+		super(statoAttuale);
+		this.capacita = capacita;
+	}
 
 }

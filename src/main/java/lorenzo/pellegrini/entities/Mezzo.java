@@ -14,8 +14,11 @@ abstract class Mezzo {
 	@Column(name = "stato_attuale", nullable = false)
 	private StatoAttuale statoAttuale;
 
-
 	public Mezzo() {
+	}
+
+	public Mezzo(StatoAttuale statoAttuale) {
+		this.statoAttuale = statoAttuale;
 	}
 
 	public UUID getId() {
