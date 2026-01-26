@@ -8,7 +8,19 @@
         <class>lorenzo.pellegrini.entities.TitoloViaggio</class>
         <class>lorenzo.pellegrini.entities.Biglietto</class>
         <class>lorenzo.pellegrini.entities.Abbonamento</class>
-        <class>lorenzo.pellegrini.enums.TipoAbbonamento</class>
+
+        <class>lorenzo.pellegrini.entities.PuntoVendita</class>
+        <class>lorenzo.pellegrini.entities.Rivenditore</class>
+        <class>lorenzo.pellegrini.entities.DistributoreAutomatico</class>
+        <class>lorenzo.pellegrini.entities.Tessera</class>
+        <class>lorenzo.pellegrini.entities.Utente</class>
+        <class>lorenzo.pellegrini.entities.Mezzo</class>
+        <class>lorenzo.pellegrini.entities.Autobus</class>
+        <class>lorenzo.pellegrini.entities.Tram</class>
+
+        <class>lorenzo.pellegrini.entities.StatoMezzo</class>
+        <class>lorenzo.pellegrini.entities.Tratta</class>
+        <class>lorenzo.pellegrini.entities.Percorrenza</class>
        
 
         <properties>
