@@ -29,7 +29,7 @@ public abstract class Mezzo {
         this.capacita = capacita;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
