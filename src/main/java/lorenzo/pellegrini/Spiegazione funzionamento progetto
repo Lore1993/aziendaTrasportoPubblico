@@ -25,7 +25,7 @@ di una tratta da parte di un mezzo.
 
 
 
------------- Utente (1) ↔ Tessera (1): ------------
+------------ Utente (1) <-> Tessera (1): ------------
 Un Utente può possedere una e una sola Tessera attiva; viceversa, una Tessera può essere associata a un solo Utente.
 
 Relazione biunivoca necessaria per l'identificazione.
@@ -33,28 +33,28 @@ Garantisce che ogni utente sia associato a una sola tessera nominativa, requisit
 La chiave esterna utente_id con vincolo UNIQUE assicura l'unicità del possesso.
 
 
------------- Tessera (1) → Titolo_Viaggio (N): ------------
+------------ Tessera (1) -> Titolo_Viaggio (N): ------------
 Una Tessera può essere collegata a molti Titoli di Viaggio (nello specifico, abbonamenti) nel corso del tempo; un Abbonamento, invece, appartiene a una sola Tessera specifica.
 
 Relazione che lega la tessera ai soli abbonamenti (settimanali/mensili).
 Permette la verifica rapida della validità: partendo dal numero tessera, il sistema può recuperare tutti i titoli associati e controllare se ne esiste uno attivo e non scaduto.
 
 
------------- Punto_Vendita (1) → Titolo_Viaggio (N): ------------
+------------ Punto_Vendita (1) ->  Titolo_Viaggio (N): ------------
 Un Punto Vendita (sia esso un distributore o un rivenditore) può emettere molti Titoli di Viaggio; ogni Titolo di Viaggio è stato emesso da un solo Punto Vendita.
 
 Consente il tracciamento delle vendite.
 Permette all'amministratore di generare report statistici sul numero di biglietti o abbonamenti emessi in un dato periodo, filtrandoli per lo specifico distributore automatico o rivenditore autorizzato.
 
 
------------- Mezzo (1) → Titolo_Viaggio (N): ------------
+------------ Mezzo (1) -> Titolo_Viaggio (N): ------------
 Un Mezzo (bus o tram) può aver vidimato a bordo molti Biglietti; un Biglietto può essere vidimato su un solo Mezzo (perché una volta vidimato viene annullato).
 
 Relazione specifica per la vidimazione. Quando un biglietto viene annullato su un bus o tram, viene registrato l'ID del mezzo.
 Questo permette di acquisire il numero totale di vidimazioni avvenute su un particolare mezzo in un periodo di tempo.
 
 
------------- Mezzo (1) → Stato_Mezzo (N): ------------
+------------ Mezzo (1) -> Stato_Mezzo (N): ------------
 Un Mezzo può attraversare molti stati (periodi di manutenzione o di servizio) durante la sua vita; ogni periodo di stato appartiene a un solo Mezzo.
 
 Gestione del ciclo di vita del parco mezzi.
@@ -62,7 +62,7 @@ Poiché un mezzo può alternare periodi di servizio e manutenzione, questa relaz
 rispondendo alla richiesta di tenere traccia dello stato del parco mezzi nel tempo.
 
 
------------- Mezzo & Tratta (N) ↔ (1) Percorrenza:  ------------
+------------ Mezzo & Tratta (N) <-> (1) Percorrenza:  ------------
 Una Tratta può essere percorsa molte volte (Percorrenze); un Mezzo può effettuare molte Percorrenze; ma ogni singola Percorrenza (viaggio specifico) è compiuta da un solo Mezzo su una sola Tratta.
 
   Tabella di associazione (ponte) per la gestione operativa. Ogni riga rappresenta un viaggio reale.
@@ -72,3 +72,12 @@ Incrociando il mezzo con la tratta, il sistema può calcolare il numero di volte
 
 Si è scelto di utilizzare classi astratte per TitoloViaggio, Mezzo e PuntoEmissione per riflettere l'architettura Single Table del database:
 questo permette di avere un unico punto di accesso per le statistiche globali (es. vendite totali) pur mantenendo distinzioni logiche chiare nel codice Java (es. Bus vs Tram).
+
+------------ Riassunto Finale Entities ------------
+Anagrafica: Utente <-> Tessera.
+
+Vendita: PuntoVendita (Abstract) -> TitoloViaggio (Abstract).
+
+Parco Mezzi: Mezzo (Abstract) con i suoi StatoMezzo (Storico).
+
+Esercizio: Tratta e Percorrenza (Statistiche tempi).
