@@ -1,7 +1,6 @@
 package lorenzo.pellegrini.entities;
 
 import jakarta.persistence.*;
-import lorenzo.pellegrini.enums.StatoAttuale;
 
 import java.util.UUID;
 
@@ -14,38 +13,38 @@ public abstract class Mezzo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "stato_attuale", nullable = false)
-	private StatoAttuale statoAttuale;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "stato_attuale", nullable = false)
+    private StatoAttuale statoAttuale;
 
-	@Column(name = "capacita")
-	private int capacita;
+    @Column(name = "capacita")
+    private int capacita;
 
-	public Mezzo() {
-	}
+    public Mezzo() {
+    }
 
-	public Mezzo(StatoAttuale statoAttuale, int capacita) {
-		this.statoAttuale = statoAttuale;
-		this.capacita=capacita;
-	}
+    public Mezzo(StatoAttuale statoAttuale, int capacita) {
+        this.statoAttuale = statoAttuale;
+        this.capacita = capacita;
+    }
 
 	public long getId() {
 		return id;
 	}
 
-	public StatoAttuale getStatoAttuale() {
-		return statoAttuale;
-	}
+    public StatoAttuale getStatoAttuale() {
+        return statoAttuale;
+    }
 
-	public void setStatoAttuale(StatoAttuale statoAttuale) {
-		this.statoAttuale = statoAttuale;
-	}
+    public void setStatoAttuale(StatoAttuale statoAttuale) {
+        this.statoAttuale = statoAttuale;
+    }
 
-	@Override
-	public String toString() {
-		return "Mezzo{" +
-				"id=" + id +
-				", statoAttuale=" + statoAttuale +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "Mezzo{" +
+                "id=" + id +
+                ", statoAttuale=" + statoAttuale +
+                '}';
+    }
 }

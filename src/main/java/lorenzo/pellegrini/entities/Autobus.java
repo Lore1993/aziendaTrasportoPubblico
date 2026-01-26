@@ -8,15 +8,16 @@ import lorenzo.pellegrini.enums.StatoAttuale;
 @DiscriminatorValue("autobus")
 public class Autobus extends Mezzo {
 
-	public Autobus(){
-	}
-	public Autobus(StatoAttuale statoAttuale, int capacita) {
-		super(statoAttuale,capacita);
-	}
+    public Autobus() {
+    }
+
+    public Autobus(StatoAttuale statoAttuale, int capacita) {
+        super(statoAttuale, capacita);
+    }
 
 
-	@Override
-	public String toString() {
-		return "Autobus{}"+ super.toString();
-	}
+    @Override
+    public String toString() {
+        return "Autobus{}" + super.toString();
+    }
 }
