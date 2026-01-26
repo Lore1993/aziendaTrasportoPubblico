@@ -1,6 +1,7 @@
 package lorenzo.pellegrini.entities;
 
 import jakarta.persistence.*;
+import lorenzo.pellegrini.enums.StatoAttuale;
 
 import java.util.UUID;
 
