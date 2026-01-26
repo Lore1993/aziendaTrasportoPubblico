@@ -1,8 +1,8 @@
 package lorenzo.pellegrini.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import lorenzo.pellegrini.enums.StatoAttuale;
 
 @Entity
 @DiscriminatorValue("autobus")

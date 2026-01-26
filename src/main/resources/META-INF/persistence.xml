@@ -12,6 +12,7 @@
         <class>lorenzo.pellegrini.entities.Mezzo</class>
         <class>lorenzo.pellegrini.entities.Tram</class>
         <class>lorenzo.pellegrini.entities.Autobus</class>
+        <class>lorenzo.pellegrini.enums.StatoAttuale</class>
        
 
         <properties>
