@@ -7,6 +7,8 @@ import java.time.LocalDate;
 
 
 @Entity
+@Table(name = "abbonamenti") // Tabella specifica per gli abbonamenti
+@PrimaryKeyJoinColumn(name = "id_titolo")
 @DiscriminatorValue("abbonamento")
 public class Abbonamento extends TitoloViaggio {
 

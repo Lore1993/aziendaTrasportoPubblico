@@ -38,7 +38,6 @@ public class TitoloViaggioDAO {
                 Biglietto b = (Biglietto) trovato; //Cast per accedere ai metodi di Biglietto
 
                 if (!b.isVidimato()) {
-                    b.setVidimato(true);
                     b.setDataVidimazione(LocalDate.now());
                     b.setIdMezzo(mezzo);
                     System.out.println("Biglietto vidimato con successo sul mezzo: " + mezzo.getId());
@@ -61,7 +60,7 @@ public class TitoloViaggioDAO {
         try {
             TypedQuery<Long> query = em.createQuery("SELECT COUNT(t) FROM TitoloViaggio t " +
                     "WHERE TYPE(t)  = Biglietto " + //JPA va a guardare la colonna tipo_acquisto (il discriminator) nel database e filtra solo le righe mappate come @DiscriminatorValue("biglietto").
-                    "AND t.vidimato = true " +
+                    "AND t.dataVidimazione IS NOT NULL " +
                     "AND t.mezzo = :valore", Long.class); //I conteggi in SQL/JPQL restituiscono sempre un tipo Long
             query.setParameter("valore", mezzo);
             return query.getSingleResult();

@@ -14,18 +14,13 @@ public abstract class Mezzo {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Cambiato da UUID a IDENTITY
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "stato_attuale", nullable = false)
-    private StatoAttuale statoAttuale;
-
     @Column(name = "capacita")
     private int capacita;
 
     public Mezzo() {
     }
 
-    public Mezzo(StatoAttuale statoAttuale, int capacita) {
-        this.statoAttuale = statoAttuale;
+    public Mezzo(int capacita) {
         this.capacita = capacita;
     }
 
@@ -33,19 +28,10 @@ public abstract class Mezzo {
         return id;
     }
 
-    public StatoAttuale getStatoAttuale() {
-        return statoAttuale;
-    }
-
-    public void setStatoAttuale(StatoAttuale statoAttuale) {
-        this.statoAttuale = statoAttuale;
-    }
-
     @Override
     public String toString() {
         return "Mezzo{" +
                 "id=" + id +
-                ", statoAttuale=" + statoAttuale +
                 '}';
     }
 }

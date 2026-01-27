@@ -1,7 +1,7 @@
 package lorenzo.pellegrini.entities;
 
 import jakarta.persistence.*;
-import lorenzo.pellegrini.enums.TipoStato;
+import lorenzo.pellegrini.enums.StatoAttuale;
 
 import java.time.LocalDate;
 
@@ -15,7 +15,7 @@ public class StatoMezzo {
     private LocalDate dataFine; // Se è null, il mezzo è attualmente in questo stato
 
     @Enumerated(EnumType.STRING)
-    private TipoStato tipoStato; // MANUTENZIONE, SERVIZIO
+    private StatoAttuale statoAttuale; // MANUTENZIONE, SERVIZIO
 
     @ManyToOne
     @JoinColumn(name = "mezzo_id")
@@ -24,9 +24,9 @@ public class StatoMezzo {
     public StatoMezzo() {
     }
 
-    public StatoMezzo(LocalDate dataInizio, TipoStato tipoStato, Mezzo mezzo) {
+    public StatoMezzo(LocalDate dataInizio, StatoAttuale statoAttuale, Mezzo mezzo) {
         this.dataInizio = dataInizio;
-        this.tipoStato = tipoStato;
+        this.statoAttuale = statoAttuale;
         this.mezzo = mezzo;
         this.dataFine = null; // Di default un nuovo stato non ha ancora una fine
     }
@@ -51,12 +51,12 @@ public class StatoMezzo {
         this.dataFine = dataFine;
     }
 
-    public TipoStato getTipoStato() {
-        return tipoStato;
+    public StatoAttuale getTipoStato() {
+        return statoAttuale;
     }
 
-    public void setTipoStato(TipoStato tipoStato) {
-        this.tipoStato = tipoStato;
+    public void setTipoStato(StatoAttuale statoAttuale) {
+        this.statoAttuale = statoAttuale;
     }
 
     public Mezzo getMezzo() {
@@ -76,7 +76,7 @@ public class StatoMezzo {
     public String toString() {
         return "StatoMezzo{" +
                 "id=" + id +
-                ", tipo=" + tipoStato +
+                ", tipo=" + statoAttuale +
                 ", dal=" + dataInizio +
                 ", al=" + (dataFine != null ? dataFine : "IN CORSO") +
                 '}';

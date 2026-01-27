@@ -22,8 +22,9 @@ Occorre tenere traccia del numero di volte che un mezzo percorre una tratta e de
 di percorrenza di esse.
 Un amministratore del sistema deve poter calcolare il tempo medio effettivo di percorrenza
 di una tratta da parte di un mezzo.
+----------------------------------------------------------------------------------------------------------
 
-
+--------------------------------------------- RELAZIONI ---------------------------------------------
 
 ------------ Utente (1) <-> Tessera (1): ------------
 Un Utente può possedere una e una sola Tessera attiva; viceversa, una Tessera può essere associata a un solo Utente.

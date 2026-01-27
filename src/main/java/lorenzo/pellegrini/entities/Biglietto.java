@@ -5,11 +5,10 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "biglietti") // Tabella specifica per i dati dei biglietti
+@PrimaryKeyJoinColumn(name = "id_titolo") // L'ID qui è sia PK che FK verso titoli_viaggio
 @DiscriminatorValue("biglietto")
 public class Biglietto extends TitoloViaggio {
-
-    @Column(name = "vidimato")
-    private boolean vidimato;
 
     @ManyToOne
     @JoinColumn(name = "mezzo_id") // Collega il biglietto al mezzo fisico
@@ -24,20 +23,15 @@ public class Biglietto extends TitoloViaggio {
     }
 
     // Costruttore con super + istanze
-    public Biglietto(LocalDate dataEmissione, PuntoVendita puntoVendita, boolean vidimato,Mezzo mezzo, LocalDate dataVidimazione) {
+    public Biglietto(LocalDate dataEmissione, PuntoVendita puntoVendita,Mezzo mezzo, LocalDate dataVidimazione) {
         super(dataEmissione, puntoVendita);
-        this.vidimato = vidimato;
         this.mezzo=mezzo;
         this.dataVidimazione = dataVidimazione;
     }
 
     // Getter e Setter
     public boolean isVidimato() {
-        return vidimato;
-    }
-
-    public void setVidimato(boolean vidimato) {
-        this.vidimato = vidimato;
+        return dataVidimazione != null;
     }
 
     public Mezzo getIdMezzo() {
@@ -62,7 +56,6 @@ public class Biglietto extends TitoloViaggio {
                 "id=" + getId() +
                 ", dataEmissione=" + getDataEmissione() +
                 ", puntoVendita=" + getPuntoVendita() +
-                ", vidimato=" + vidimato +
                 ", Mezzo=" + mezzo +
                 ", dataVidimazione=" + dataVidimazione +
                 '}';
