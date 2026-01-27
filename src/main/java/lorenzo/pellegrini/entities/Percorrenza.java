@@ -27,12 +27,12 @@ public class Percorrenza {
     @Column(name = "data_corsa")
     private LocalDate dataCorsa;
 
-    public Percorrenza(LocalDate dataCorsa, int tempoEffettivoMinuti, Tratta tratta, Mezzo mezzo) {
+    public Percorrenza(LocalDate dataCorsa, int tempoEffettivoMinuti, Tratta tratta, Mezzo mezzo, long id) {
         this.dataCorsa = dataCorsa;
         this.tempoEffettivoMinuti = tempoEffettivoMinuti;
         this.tratta = tratta;
         this.mezzo = mezzo;
-
+        this.id = id;
     }
 
     public Percorrenza() {
@@ -43,6 +43,9 @@ public class Percorrenza {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Mezzo getMezzo() {
         return mezzo;
