@@ -15,8 +15,6 @@
         <class>lorenzo.pellegrini.entities.Tessera</class>
         <class>lorenzo.pellegrini.entities.Utente</class>
         <class>lorenzo.pellegrini.entities.Mezzo</class>
-        <class>lorenzo.pellegrini.entities.Autobus</class>
-        <class>lorenzo.pellegrini.entities.Tram</class>
 
         <class>lorenzo.pellegrini.entities.StatoMezzo</class>
         <class>lorenzo.pellegrini.entities.Tratta</class>
