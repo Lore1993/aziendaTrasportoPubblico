@@ -17,7 +17,7 @@ public class Utente {
 @Column(unique = true, nullable = false)
     private String email;
 
-    @OneToOne(mappedBy = "utente")
+    @OneToOne(mappedBy = "utente",cascade = CascadeType.ALL)
     private Tessera tessera;
 
     public Utente(){}
