@@ -38,6 +38,9 @@ public class Percorrenza {
     public Percorrenza() {
     }
 
+    public Percorrenza(LocalDate now, int i, Tratta tratta1, Mezzo mezzo1) {
+    }
+
 
     public long getId() {
         return id;

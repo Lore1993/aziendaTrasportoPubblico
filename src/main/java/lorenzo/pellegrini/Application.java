@@ -23,13 +23,13 @@ public class Application {
 
         //-----------DAO-------------------
 
-        DaoMezzi dm=new DaoMezzi(em);
-        UtenteDAO ud=new UtenteDAO(em);
-        StatoMezzoDAO sm=new StatoMezzoDAO(em);
-        PuntoVenditaDAO pvd=new PuntoVenditaDAO(em);
-        TitoloViaggioDAO tvd=new TitoloViaggioDAO(em);
-        PercorrenzaDAO pd=new PercorrenzaDAO(em);
-        TratteDao td=new TratteDao(em);
+        DaoMezzi dm = new DaoMezzi(em);
+        UtenteDAO ud = new UtenteDAO(em);
+        StatoMezzoDAO sm = new StatoMezzoDAO(em);
+        PuntoVenditaDAO pvd = new PuntoVenditaDAO(em);
+        TitoloViaggioDAO tvd = new TitoloViaggioDAO(em);
+        PercorrenzaDAO pd = new PercorrenzaDAO(em);
+        TratteDao td = new TratteDao(em);
 
         //------------------- MEZZI ----------------------------
         Mezzo mezzo1 = new Mezzo(200, TipoMezzo.AUTOBUS);
@@ -41,17 +41,17 @@ public class Application {
 
         System.out.println("------------------- MEZZI ----------------------------");
         System.out.println();
-        dm.salvaMezzi(mezzo1);
-        dm.salvaMezzi(mezzo2);
-        dm.salvaMezzi(mezzo3);
-        dm.salvaMezzi(mezzo4);
-        dm.salvaMezzi(mezzo5);
-        dm.salvaMezzi(mezzo6);
+        dm.salvaMezzo(mezzo1);
+        dm.salvaMezzo(mezzo2);
+        dm.salvaMezzo(mezzo3);
+        dm.salvaMezzo(mezzo4);
+        dm.salvaMezzo(mezzo5);
+        dm.salvaMezzo(mezzo6);
         System.out.println();
 
         //--------------------- STATO MEZZI -------------------------
 
-        StatoMezzo statoMezzo = new StatoMezzo(LocalDate.now(), StatoAttuale.IN_SERVIZIO,mezzo1);
+        StatoMezzo statoMezzo = new StatoMezzo(LocalDate.now(), StatoAttuale.IN_SERVIZIO, mezzo1);
         sm.save(statoMezzo);
 
 //------------------------------ UTENTI ----------------------------------
@@ -80,18 +80,18 @@ public class Application {
 
         System.out.println("------------------- UTENTI ----------------------------");
         System.out.println();
-       ud.save(utente1);
-       ud.save(utente2);
-       ud.save(utente3);
-       ud.save(utente4);
-       ud.save(utente5);
+        ud.save(utente1);
+        ud.save(utente2);
+        ud.save(utente3);
+        ud.save(utente4);
+        ud.save(utente5);
         System.out.println();
 
 //----------------------------------- PUNTI VENDITA -------------------------------------------------
 
         PuntoVendita rivenditore1 = new Rivenditore("Tabaccaio");
-        PuntoVendita rivenditore2 = new DistributoreAutomatico("distributore automatico",false);
-        PuntoVendita rivenditore3=new DistributoreAutomatico("distributore automatico",true);
+        PuntoVendita rivenditore2 = new DistributoreAutomatico("distributore automatico", false);
+        PuntoVendita rivenditore3 = new DistributoreAutomatico("distributore automatico", true);
         PuntoVendita rivenditore4 = new Rivenditore("biglietteria");
 
         System.out.println("------------------- PUNTI VENDITA ----------------------------");
@@ -106,8 +106,8 @@ public class Application {
 //----------------------------------- BIGLIETTI/ABBONAMENTI -------------------------------------------------
 
         Biglietto biglietto1 = new Biglietto(LocalDate.now(), rivenditore1, mezzo1, null);
-        Biglietto biglietto2=new Biglietto(LocalDate.now(), rivenditore2, mezzo2,null);
-        Biglietto biglietto3=new Biglietto(LocalDate.now(), rivenditore3, mezzo3, LocalDate.now().minusDays(1));
+        Biglietto biglietto2 = new Biglietto(LocalDate.now(), rivenditore2, mezzo2, null);
+        Biglietto biglietto3 = new Biglietto(LocalDate.now(), rivenditore3, mezzo3, LocalDate.now().minusDays(1));
 
         Abbonamento abbonamento1 = new Abbonamento(
                 LocalDate.of(2026, 1, 1), rivenditore1, TipoAbbonamento.MENSILE, tessera1);
@@ -136,10 +136,9 @@ public class Application {
         System.out.println();
 
 
-
-        Percorrenza percorrenza1 = new Percorrenza(LocalDate.now(),42,tratta1,mezzo1);
-        Percorrenza percorrenza2=new Percorrenza(LocalDate.now(),18,tratta2,mezzo2);
-        Percorrenza percorrenza3=new Percorrenza(LocalDate.now(),10,tratta3,mezzo3);
+        Percorrenza percorrenza1 = new Percorrenza(LocalDate.now(), 42, tratta1, mezzo1);
+        Percorrenza percorrenza2 = new Percorrenza(LocalDate.now(), 18, tratta2, mezzo2);
+        Percorrenza percorrenza3 = new Percorrenza(LocalDate.now(), 10, tratta3, mezzo3);
 
         System.out.println("------------------- PERCORRENZE ----------------------------");
         System.out.println();
@@ -151,27 +150,17 @@ public class Application {
 
         System.out.println("------------------- METODI ----------------------------");
         System.out.println();
-        tvd.vidimaBiglietto(2L,mezzo1);
+        tvd.vidimaBiglietto(2L, mezzo1);
 
-        long count1=tvd.countVidimatiSuMezzo(mezzo1);
-        System.out.println("Biglietti vidimati sul mezzo: "+ mezzo1.getId() + "-" + mezzo1.getTipoMezzo() + " --> " + +count1);
+        long count1 = tvd.countVidimatiSuMezzo(mezzo1);
+        System.out.println("Biglietti vidimati sul mezzo: " + mezzo1.getId() + "-" + mezzo1.getTipoMezzo() + " --> " + +count1);
 
-        long count2=tvd.countVidimatiSuMezzo(mezzo2);
-        System.out.println("Biglietti vidimati sul mezzo: "+ mezzo2.getId() + "-" + mezzo2.getTipoMezzo() + " --> " + +count2);
+        long count2 = tvd.countVidimatiSuMezzo(mezzo2);
+        System.out.println("Biglietti vidimati sul mezzo: " + mezzo2.getId() + "-" + mezzo2.getTipoMezzo() + " --> " + +count2);
 
         long countvid = tvd.countVidimatiInPeriodo(LocalDate.now(), LocalDate.now());
-        System.out.println("Conteggio biglietti vidimati per un certo periodo --> "+countvid);
+        System.out.println("Conteggio biglietti vidimati per un certo periodo --> " + countvid);
         System.out.println();
-
-
-
-
-
-
-
-
-
-
 
 
         try {
@@ -181,5 +170,6 @@ public class Application {
         } finally {
             em.close();
             emf.close();
-        }}
+        }
     }
+}

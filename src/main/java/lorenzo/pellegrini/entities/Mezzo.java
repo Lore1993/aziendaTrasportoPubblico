@@ -37,6 +37,10 @@ public class Mezzo {
         this.tipoMezzo = tipoMezzo;
     }
 
+    public TipoMezzo getTipoMezzo() {
+        return tipoMezzo;
+    }
+
     public long getId() {
         return id;
     }
