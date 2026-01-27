@@ -42,6 +42,7 @@ public class TesseraDAO {
         if (tessera != null) {
             em.getTransaction().begin();
             tessera.setDataEmissione(LocalDate.now());
+
             em.merge(tessera);
             em.getTransaction().commit();
         }
