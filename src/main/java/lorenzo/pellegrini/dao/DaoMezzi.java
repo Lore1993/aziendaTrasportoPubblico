@@ -2,9 +2,11 @@ package lorenzo.pellegrini.dao;
 
 import jakarta.persistence.EntityManager;
 import lorenzo.pellegrini.entities.Mezzo;
+import lorenzo.pellegrini.entities.StatoMezzo;
 import lorenzo.pellegrini.enums.StatoAttuale;
 import lorenzo.pellegrini.enums.TipoMezzo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class DaoMezzi {
@@ -14,7 +16,7 @@ public class DaoMezzi {
         this.em = em;
     }
 
-    //  CRUD
+    //  CRUD BASE
 
     public void salvaMezzo(Mezzo mezzo) {
         em.persist(mezzo);
@@ -73,7 +75,7 @@ public class DaoMezzi {
     }
 
 
-    // Trova tutti i mezzi con capacità maggiore o uguale a un valore
+    //Trova tutti i mezzi con capacità maggiore o uguale a un valore
 
     public List<Mezzo> trovaMezziPerCapacitaMinima(int capacitaMinima) {
         return em.createQuery(
@@ -83,5 +85,48 @@ public class DaoMezzi {
                 .getResultList();
     }
 
+    // METODI Queries
 
+
+    //Crea un mezzo e imposta subito il suo primo stato
+
+
+    public Mezzo creaMezzoConStato(int capacita, TipoMezzo tipo, StatoAttuale statoIniziale) {
+        // Crea il mezzo
+        Mezzo mezzo = new Mezzo(capacita, tipo);
+        em.persist(mezzo);
+
+        // Crea lo stato iniziale
+        StatoMezzo stato = new StatoMezzo(LocalDate.now(), statoIniziale, mezzo);
+        em.persist(stato);
+
+        System.out.println("Mezzo creato con stato iniziale: " + mezzo + " - Stato: " + statoIniziale);
+        return mezzo;
+    }
+
+
+    // Conta tutti i mezzi presenti nel sistema
+
+    public long contaTuttiIMezzi() {
+        return em.createQuery("SELECT COUNT(m) FROM Mezzo m", Long.class)
+                .getSingleResult();
+    }
+
+
+    // Conta i mezzi di un determinato tipo
+
+    public long contaMezziPerTipo(TipoMezzo tipo) {
+        return em.createQuery(
+                        "SELECT COUNT(m) FROM Mezzo m WHERE m.tipoMezzo = :tipo",
+                        Long.class)
+                .setParameter("tipo", tipo)
+                .getSingleResult();
+    }
+
+
+    // Verifica se un mezzo esiste
+
+    public boolean mezzoEsiste(long id) {
+        return trovaMezzoPerId(id) != null;
+    }
 }
