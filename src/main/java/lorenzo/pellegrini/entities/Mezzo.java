@@ -8,7 +8,7 @@ import lorenzo.pellegrini.enums.TipoMezzo;
 @Table(name = "Mezzo")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_mezzo", discriminatorType = DiscriminatorType.STRING)
-public abstract class Mezzo {
+public class Mezzo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Cambiato da UUID a IDENTITY
     private Long id;
@@ -30,6 +30,11 @@ public abstract class Mezzo {
     public Mezzo(StatoAttuale statoAttuale, int capacita) {
         this.statoAttuale = statoAttuale;
         this.capacita = capacita;
+    }
+
+    public Mezzo(int capacita, TipoMezzo tipoMezzo) {
+        this.capacita = capacita;
+        this.tipoMezzo = tipoMezzo;
     }
 
     public long getId() {
