@@ -10,7 +10,9 @@ public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek1db");
 
     public static void main(String[] args) {
+
         EntityManager em = emf.createEntityManager();
+
 
         try {
             System.out.println("Collegameto database riuscito");
