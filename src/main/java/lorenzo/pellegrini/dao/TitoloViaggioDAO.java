@@ -21,9 +21,23 @@ public class TitoloViaggioDAO {
 
     public void save(TitoloViaggio titolo) {
         EntityTransaction t = em.getTransaction();
-        t.begin();
-        em.persist(titolo);
-        t.commit();
+        try {
+            t.begin();
+            em.persist(titolo);
+            t.commit();
+
+            // Controllo del tipo per messaggio personalizzato
+            if (titolo instanceof Biglietto) {
+                System.out.println("Biglietto emesso con successo! ID: " + titolo.getId());
+            } else if (titolo instanceof Abbonamento) {
+                Abbonamento a = (Abbonamento) titolo; // Cast per accedere ai metodi dell'abbonamento
+                System.out.println("Abbonamento " + a.getTipoAbbonamento() +
+                        " emesso per la tessera: " + a.getTesseraId().getNumeroTessera());
+            }
+
+        } catch (Exception e) {
+            System.err.println("Errore nel salvataggio della percorrenza: " + e.getMessage());
+        }
     }
 
     public void vidimaBiglietto(Long id, Mezzo mezzo) {

@@ -20,9 +20,9 @@ public class PercorrenzaDAO {
             t.begin();
             em.persist(percorrenza);
             t.commit();
-            System.out.println("Tratta salvata correttamente: " + percorrenza.getDataCorsa() + " - " + percorrenza.getTempoEffettivoMinuti());
+            System.out.println("Percorrenza salvata correttamente: " + percorrenza.getDataCorsa() + " - " + percorrenza.getTempoEffettivoMinuti());
         } catch (Exception e) {
-            System.err.println("Errore nel salvataggio della tratta: " + e.getMessage());
+            System.err.println("Errore nel salvataggio della percorrenza: " + e.getMessage());
         }
     }
 

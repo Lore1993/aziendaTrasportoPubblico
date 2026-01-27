@@ -19,7 +19,7 @@ public class PuntoVenditaDAO {
         t.begin();
         em.persist(pv);
         t.commit();
-        System.out.println("Ho salvato il punto vendita: " + pv.getNome());
+        System.out.println("Salvato il punto vendita: " + pv.getNome());
     }
 
     // cerco un punto vendita per ID

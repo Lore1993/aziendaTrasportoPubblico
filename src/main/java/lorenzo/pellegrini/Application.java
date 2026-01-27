@@ -39,12 +39,15 @@ public class Application {
         Mezzo mezzo5 = new Mezzo(60, TipoMezzo.AUTOBUS);
         Mezzo mezzo6 = new Mezzo(150, TipoMezzo.TRAM);
 
+        System.out.println("------------------- MEZZI ----------------------------");
+        System.out.println();
         dm.salvaMezzi(mezzo1);
         dm.salvaMezzi(mezzo2);
         dm.salvaMezzi(mezzo3);
         dm.salvaMezzi(mezzo4);
         dm.salvaMezzi(mezzo5);
         dm.salvaMezzi(mezzo6);
+        System.out.println();
 
         //--------------------- STATO MEZZI -------------------------
 
@@ -75,11 +78,14 @@ public class Application {
         utente4.setTessera(tessera4);
         utente5.setTessera(tessera5);
 
+        System.out.println("------------------- UTENTI ----------------------------");
+        System.out.println();
        ud.save(utente1);
        ud.save(utente2);
        ud.save(utente3);
        ud.save(utente4);
        ud.save(utente5);
+        System.out.println();
 
 //----------------------------------- PUNTI VENDITA -------------------------------------------------
 
@@ -88,10 +94,13 @@ public class Application {
         PuntoVendita rivenditore3=new DistributoreAutomatico("distributore automatico",true);
         PuntoVendita rivenditore4 = new Rivenditore("biglietteria");
 
+        System.out.println("------------------- PUNTI VENDITA ----------------------------");
+        System.out.println();
         pvd.save(rivenditore1);
         pvd.save(rivenditore2);
         pvd.save(rivenditore3);
         pvd.save(rivenditore4);
+        System.out.println();
 
 
 //----------------------------------- BIGLIETTI/ABBONAMENTI -------------------------------------------------
@@ -104,44 +113,56 @@ public class Application {
                 LocalDate.of(2026, 1, 1), rivenditore1, TipoAbbonamento.MENSILE, tessera1);
 
 
+        System.out.println("------------------- BIGLIETTI/ABBONAMENTI ----------------------------");
+        System.out.println();
         tvd.save(abbonamento1);
         tvd.save(biglietto1);
         tvd.save(biglietto2);
         tvd.save(biglietto3);
+        System.out.println();
 
-//----------------------------------- METODI TITOLI DI VIAGGIO -------------------------------------------------
-
-        tvd.vidimaBiglietto(2L,mezzo1);
-        tvd.vidimaBiglietto(3L,mezzo1);
-
-        long count1=tvd.countVidimatiSuMezzo(mezzo1);
-        System.out.println(count1);
-
-        long count2=tvd.countVidimatiSuMezzo(mezzo2);
-        System.out.println(count2);
-
-        long countvid = tvd.countVidimatiInPeriodo(LocalDate.now(), LocalDate.now());
-        System.out.println("conteggio vidimati in periodo--------->"+countvid);
-
-        //---------------------- TRATTE/PEROCRRENZE ---------------------------------------------
+        //---------------------- TRATTE/PERCORRENZE ---------------------------------------------
 
 
         Tratta tratta1 = new Tratta("Pomezia", "Roma-centro", 35);
         Tratta tratta2 = new Tratta("stz.Santa M. Novella", "Ponte vecchio", 20);
         Tratta tratta3 = new Tratta("Piazza del Popolo", "Fontana di Trevi", 7);
 
+        System.out.println("------------------- TRATTE ----------------------------");
+        System.out.println();
         td.save(tratta1);
         td.save(tratta2);
         td.save(tratta3);
+        System.out.println();
+
 
 
         Percorrenza percorrenza1 = new Percorrenza(LocalDate.now(),42,tratta1,mezzo1);
         Percorrenza percorrenza2=new Percorrenza(LocalDate.now(),18,tratta2,mezzo2);
         Percorrenza percorrenza3=new Percorrenza(LocalDate.now(),10,tratta3,mezzo3);
 
+        System.out.println("------------------- PERCORRENZE ----------------------------");
+        System.out.println();
         pd.save(percorrenza1);
         pd.save(percorrenza2);
         pd.save(percorrenza3);
+        System.out.println();
+
+
+        System.out.println("------------------- METODI ----------------------------");
+        System.out.println();
+        tvd.vidimaBiglietto(2L,mezzo1);
+
+        long count1=tvd.countVidimatiSuMezzo(mezzo1);
+        System.out.println("Biglietti vidimati sul mezzo: "+ mezzo1.getId() + "-" + mezzo1.getTipoMezzo() + " --> " + +count1);
+
+        long count2=tvd.countVidimatiSuMezzo(mezzo2);
+        System.out.println("Biglietti vidimati sul mezzo: "+ mezzo2.getId() + "-" + mezzo2.getTipoMezzo() + " --> " + +count2);
+
+        long countvid = tvd.countVidimatiInPeriodo(LocalDate.now(), LocalDate.now());
+        System.out.println("Conteggio biglietti vidimati per un certo periodo --> "+countvid);
+        System.out.println();
+
 
 
 

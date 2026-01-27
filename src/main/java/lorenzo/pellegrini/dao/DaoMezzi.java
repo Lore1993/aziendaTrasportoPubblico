@@ -20,7 +20,7 @@ public class DaoMezzi {
 		tx.begin();
 		em.persist(mezzo);
 		tx.commit();
-		System.out.println("il mezzo "+mezzo+" è stato salvato");
+		System.out.println("Salvataggio del mezzo ID: "+mezzo.getId()+  " --- Tipo: " + mezzo.getTipoMezzo() + " avvenuto con successo!");
 	}
 	public Mezzo getMezzo(long id) {
 		EntityTransaction tx = em.getTransaction();
