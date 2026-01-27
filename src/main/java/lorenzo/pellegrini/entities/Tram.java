@@ -13,7 +13,7 @@ public class Tram extends Mezzo {
     }
 
     public Tram( int capacita) {
-        super( capacita);
+        super(capacita);
     }
 
     @Override
