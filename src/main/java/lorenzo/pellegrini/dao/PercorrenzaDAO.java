@@ -1,7 +1,9 @@
 package lorenzo.pellegrini.dao;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import lorenzo.pellegrini.entities.Percorrenza;
+import lorenzo.pellegrini.entities.Tratta;
 
 public class PercorrenzaDAO {
 
@@ -13,7 +15,15 @@ public class PercorrenzaDAO {
 
 
     public void save(Percorrenza percorrenza) {
-        em.persist(percorrenza);
+        EntityTransaction t = em.getTransaction();
+        try {
+            t.begin();
+            em.persist(percorrenza);
+            t.commit();
+            System.out.println("Tratta salvata correttamente: " + percorrenza.getDataCorsa() + " - " + percorrenza.getTempoEffettivoMinuti());
+        } catch (Exception e) {
+            System.err.println("Errore nel salvataggio della tratta: " + e.getMessage());
+        }
     }
 
     public Percorrenza findById(long id) {

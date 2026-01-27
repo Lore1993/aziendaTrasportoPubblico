@@ -29,6 +29,7 @@ public class Application {
         PuntoVenditaDAO pvd=new PuntoVenditaDAO(em);
         TitoloViaggioDAO tvd=new TitoloViaggioDAO(em);
         PercorrenzaDAO pd=new PercorrenzaDAO(em);
+        TratteDao td=new TratteDao(em);
 
         //------------------- MEZZI ----------------------------
         Mezzo mezzo1 = new Mezzo(200, TipoMezzo.AUTOBUS);
@@ -129,6 +130,9 @@ public class Application {
         Tratta tratta2 = new Tratta("stz.Santa M. Novella", "Ponte vecchio", 20);
         Tratta tratta3 = new Tratta("Piazza del Popolo", "Fontana di Trevi", 7);
 
+        td.save(tratta1);
+        td.save(tratta2);
+        td.save(tratta3);
 
 
         Percorrenza percorrenza1 = new Percorrenza(LocalDate.now(),42,tratta1,mezzo1);
