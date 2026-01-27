@@ -12,8 +12,8 @@ public class Tram extends Mezzo {
     public Tram() {
     }
 
-    public Tram(StatoAttuale statoAttuale, int capacita) {
-        super(statoAttuale, capacita);
+    public Tram( int capacita) {
+        super( capacita);
     }
 
     @Override

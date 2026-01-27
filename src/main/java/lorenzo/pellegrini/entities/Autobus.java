@@ -11,8 +11,8 @@ public class Autobus extends Mezzo {
     public Autobus() {
     }
 
-    public Autobus(StatoAttuale statoAttuale, int capacita) {
-        super(statoAttuale, capacita);
+    public Autobus( int capacita) {
+        super( capacita);
     }
 
 
