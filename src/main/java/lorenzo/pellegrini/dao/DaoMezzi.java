@@ -1,7 +1,9 @@
 package lorenzo.pellegrini.dao;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import lorenzo.pellegrini.entities.Mezzo;
+import lorenzo.pellegrini.entities.Tratta;
 import lorenzo.pellegrini.enums.StatoAttuale;
 import lorenzo.pellegrini.enums.TipoMezzo;
 
@@ -17,8 +19,16 @@ public class DaoMezzi {
     //  BASE
 
     public void salvaMezzo(Mezzo mezzo) {
-        em.persist(mezzo);
-        System.out.println("Mezzo salvato: " + mezzo);
+        EntityTransaction transaction = em.getTransaction();
+        try {
+            transaction.begin();
+            em.persist(mezzo);
+            transaction.commit();
+            System.out.println(mezzo.getTipoMezzo() + " con id: " + mezzo.getId() + "salvato con successo!");
+        } catch (Exception e) {
+            System.err.println("Errore nel salvataggio del mezzo: " + e.getMessage());
+        }
+
     }
 
     public Mezzo trovaMezzoPerId(long id) {
@@ -32,12 +42,15 @@ public class DaoMezzi {
 
 
     public void eliminaMezzo(long id) {
-        Mezzo mezzo = trovaMezzoPerId(id);
-        if (mezzo != null) {
-            em.remove(mezzo);
-            System.out.println("Mezzo eliminato con ID: " + id);
+        EntityTransaction t = em.getTransaction();
+        Mezzo trovata = trovaMezzoPerId(id);
+        if (trovata != null){
+            t.begin();
+            em.remove(trovata);
+            t.commit();
+            System.out.println("Mezzo eliminata.");
         } else {
-            System.out.println("Mezzo non trovato con ID: " + id);
+            System.out.println("Mezzo non trovata.");
         }
     }
 
