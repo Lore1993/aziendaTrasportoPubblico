@@ -1,9 +1,6 @@
 package lorenzo.pellegrini.dao;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.*;
 import lorenzo.pellegrini.entities.Abbonamento;
 import lorenzo.pellegrini.entities.Biglietto;
 import lorenzo.pellegrini.entities.Mezzo;
@@ -102,8 +99,6 @@ public class TitoloViaggioDAO {
         }
     }
 
-
-
     public Abbonamento findUltimoAbbonamento(String numeroTessera) {
         try {
             TypedQuery<Abbonamento> query = em.createQuery("SELECT a FROM Abbonamento a " +
@@ -140,5 +135,18 @@ public class TitoloViaggioDAO {
         return oggi.isBefore(scadenza) || oggi.isEqual(scadenza);
         //L'abbonamento sarà valido se la data di oggi è precedente o uguale alla data di scadenza
     }
+
+    // metodo che filtri le vendite non solo per data, ma anche per lo specifico rivenditore o distributore.
+    public long countTitoliPerPuntoVendita(Long puntoVenditaId, LocalDate inizio, LocalDate fine){
+        TypedQuery<Long> query = em.createQuery("SELECT COUNT(t) FROM TitoloViaggio t " +
+                "WHERE t.puntoVendita.id = :id " +
+                "AND t.dataEmissione BETWEEN :inizio AND :fine", Long.class);
+        query.setParameter("pvId", puntoVenditaId);
+        query.setParameter("inizio", inizio);
+        query.setParameter("fine", fine);
+        return query.getSingleResult();
+    }
+
+
 
 }
