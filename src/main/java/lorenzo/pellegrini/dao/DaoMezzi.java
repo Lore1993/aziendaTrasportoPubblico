@@ -24,7 +24,7 @@ public class DaoMezzi {
             transaction.begin();
             em.persist(mezzo);
             transaction.commit();
-            System.out.println(mezzo.getTipoMezzo() + " con id: " + mezzo.getId() + "salvato con successo!");
+            System.out.println(mezzo.getTipoMezzo() + " con id: " + mezzo.getId() + " salvato con successo!");
         } catch (Exception e) {
             System.err.println("Errore nel salvataggio del mezzo: " + e.getMessage());
         }

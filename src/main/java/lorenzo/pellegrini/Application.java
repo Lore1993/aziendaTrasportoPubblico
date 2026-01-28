@@ -150,6 +150,7 @@ public class Application {
 
         System.out.println("------------------- METODI ----------------------------");
         System.out.println();
+
         tvd.vidimaBiglietto(2L, mezzo1);
 
         long count1 = tvd.countVidimatiSuMezzo(mezzo1);
