@@ -139,6 +139,8 @@ public class Application {
         Percorrenza percorrenza1 = new Percorrenza(LocalDate.now(), 42, tratta1, mezzo1);
         Percorrenza percorrenza2 = new Percorrenza(LocalDate.now(), 18, tratta2, mezzo2);
         Percorrenza percorrenza3 = new Percorrenza(LocalDate.now(), 10, tratta3, mezzo3);
+        Percorrenza percorrenza4=new Percorrenza((LocalDate.of(2026,1,10)),19,tratta1, mezzo1);
+        Percorrenza
 
         System.out.println("------------------- PERCORRENZE ----------------------------");
         System.out.println();
