@@ -7,14 +7,14 @@ import lorenzo.pellegrini.enums.TipoMezzo;
 @Entity
 @Table(name = "Mezzo")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_mezzo", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "Mezzo_di_Trasporto", discriminatorType = DiscriminatorType.STRING)
 public class Mezzo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Cambiato da UUID a IDENTITY
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "stato_attuale", nullable = false)
+    @Column(name = "stato_attuale")
     private StatoAttuale statoAttuale;
     @Enumerated(EnumType.STRING)
 
