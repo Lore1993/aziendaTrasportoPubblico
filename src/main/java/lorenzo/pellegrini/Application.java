@@ -140,13 +140,15 @@ public class Application {
         Percorrenza percorrenza2 = new Percorrenza(LocalDate.now(), 18, tratta2, mezzo2);
         Percorrenza percorrenza3 = new Percorrenza(LocalDate.now(), 10, tratta3, mezzo3);
         Percorrenza percorrenza4=new Percorrenza((LocalDate.of(2026,1,10)),19,tratta1, mezzo1);
-        Percorrenza
+        Percorrenza percorrenza5=new Percorrenza(LocalDate.of(2026,1,11),20,tratta1, mezzo1);
 
         System.out.println("------------------- PERCORRENZE ----------------------------");
         System.out.println();
         pd.save(percorrenza1);
         pd.save(percorrenza2);
         pd.save(percorrenza3);
+        pd.save(percorrenza4);
+        pd.save(percorrenza5);
         System.out.println();
 
 
@@ -164,6 +166,17 @@ public class Application {
         long countvid = tvd.countVidimatiInPeriodo(LocalDate.now(), LocalDate.now());
         System.out.println("Conteggio biglietti vidimati per un certo periodo --> " + countvid);
         System.out.println();
+
+
+        double avg1 = pd.getTempoMedioEffettvo(1L);
+        System.out.println("Tempo medio effettvo: " + avg1);
+
+        long contaPercorrenze1 = pd.getCountCorseSuTratta(1L);
+        System.out.println("Corse su tratta: " + contaPercorrenze1);
+
+        long corsaMezzoTratta1=pd.corseMezzoSuTratta(1L,1L);
+        System.out.println("Corse mezzo su tratta : "+corsaMezzoTratta1);
+
 
 
         try {
