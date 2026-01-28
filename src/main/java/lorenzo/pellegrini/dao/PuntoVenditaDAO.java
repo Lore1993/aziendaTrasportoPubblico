@@ -2,6 +2,7 @@ package lorenzo.pellegrini.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import lorenzo.pellegrini.entities.Biglietto;
 import lorenzo.pellegrini.entities.PuntoVendita;
 import java.time.LocalDate;
@@ -42,5 +43,16 @@ public class PuntoVenditaDAO {
         t.commit();
 
         System.out.println("Biglietto venduto da " + pv.getNome());
+    }
+
+    // metodo che filtri le vendite non solo per data, ma anche per lo specifico rivenditore o distributore.
+    public long countTitoliPerPuntoVendita(Long puntoVenditaId, LocalDate inizio, LocalDate fine){
+        TypedQuery<Long> query = em.createQuery("SELECT COUNT(t) FROM TitoloViaggio t " +
+                "WHERE t.puntoVendita.id = :id " +
+                "AND t.dataEmissione BETWEEN :inizio AND :fine", Long.class);
+        query.setParameter("pvId", puntoVenditaId);
+        query.setParameter("inizio", inizio);
+        query.setParameter("fine", fine);
+        return query.getSingleResult();
     }
 }
