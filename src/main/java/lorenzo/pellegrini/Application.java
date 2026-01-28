@@ -1,5 +1,6 @@
 package lorenzo.pellegrini;
 
+import java.util.Scanner;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -14,8 +15,23 @@ import java.util.Random;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("buildweek1db");
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        System.out.println("=== AZIENDA TRASPORTO PUBBLICO ===");
+        System.out.println("1. Utente");
+        System.out.println("2. Amministratore");
+        System.out.println("0. Esci");
+        System.out.print("Scelta: ");
+
+        Scanner scanner = new Scanner(System.in);
+        int scelta = scanner.nextInt();
+
+        if (scelta == 0) {
+            System.out.println("Uscita dal programma");
+            emf.close();
+            return;
+        }
 
         EntityManager em = emf.createEntityManager();
 
@@ -140,7 +156,7 @@ public class Application {
         Percorrenza percorrenza2 = new Percorrenza(LocalDate.now(), 18, tratta2, mezzo2);
         Percorrenza percorrenza3 = new Percorrenza(LocalDate.now(), 10, tratta3, mezzo3);
         Percorrenza percorrenza4=new Percorrenza((LocalDate.of(2026,1,10)),19,tratta1, mezzo1);
-        Percorrenza
+        //Percorrenza
 
         System.out.println("------------------- PERCORRENZE ----------------------------");
         System.out.println();
