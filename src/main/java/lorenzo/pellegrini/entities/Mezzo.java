@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lorenzo.pellegrini.enums.StatoAttuale;
 import lorenzo.pellegrini.enums.TipoMezzo;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "Mezzo")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -24,7 +28,19 @@ public class Mezzo {
     @Column(name = "capacita")
     private int capacita;
 
+    @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
+    private List<StatoMezzo> storicoStati = new ArrayList<>();
+
     public Mezzo() {
+    }
+
+    public Mezzo(TipoMezzo tipoMezzo, int capacita, StatoAttuale statoIniziale) {
+        this.tipoMezzo = tipoMezzo;
+        this.capacita = capacita;
+        this.statoAttuale = statoIniziale;
+
+        StatoMezzo stato = new StatoMezzo(LocalDate.now(), statoIniziale, this);
+        this.storicoStati.add(stato);
     }
 
     public Mezzo(StatoAttuale statoAttuale, int capacita) {
@@ -45,8 +61,18 @@ public class Mezzo {
         return id;
     }
 
-    public StatoAttuale getStatoAttuale() {
-        return statoAttuale;
+    // Aggiunge un nuovo stato al mezzo
+    public void aggiungiStato(StatoMezzo stato) {
+        storicoStati.add(stato);
+        stato.setMezzo(this);
+    }
+
+    // Restituisce lo stato attuale
+    public StatoMezzo getStatoAttuale() {
+        return storicoStati.stream()
+                .filter(StatoMezzo::isStatoAttuale)
+                .findFirst()
+                .orElse(null);
     }
 
     public void setStatoAttuale(StatoAttuale statoAttuale) {
