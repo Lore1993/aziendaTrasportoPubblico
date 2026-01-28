@@ -13,6 +13,8 @@ public abstract class PuntoVendita {
 
     private String nome;
 
+    private boolean inServizio;
+
     @OneToMany(mappedBy = "puntoVendita")
     private List<TitoloViaggio> titoliEmessi; // Un punto emette molti titoli
 
@@ -40,5 +42,15 @@ public abstract class PuntoVendita {
 
     public void setTitoliEmessi(List<TitoloViaggio> titoliEmessi) {
         this.titoliEmessi = titoliEmessi;
+    }
+
+    //cambio stato
+    public void setInServizio(boolean nuovoStato) {
+        this.inServizio = nuovoStato;
+    }
+
+    // leggo stato
+    public boolean isInServizio() {
+        return this.inServizio;
     }
 }
