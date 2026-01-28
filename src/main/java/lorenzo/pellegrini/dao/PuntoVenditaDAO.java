@@ -5,6 +5,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 import lorenzo.pellegrini.entities.Biglietto;
 import lorenzo.pellegrini.entities.PuntoVendita;
+import lorenzo.pellegrini.entities.Tratta;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,6 +30,11 @@ public class PuntoVenditaDAO {
     public PuntoVendita findById(Long id) {
         PuntoVendita trovato = em.find(PuntoVendita.class, id);
         return trovato;
+    }
+
+    public List<PuntoVendita> findAllPuntoVendita(){
+        TypedQuery<PuntoVendita> query = em.createQuery("SELECT p FROM PuntoVendita p", PuntoVendita.class);
+        return query.getResultList();
     }
 
 
