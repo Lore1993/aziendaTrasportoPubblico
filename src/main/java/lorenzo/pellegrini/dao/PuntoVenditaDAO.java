@@ -6,6 +6,7 @@ import jakarta.persistence.TypedQuery;
 import lorenzo.pellegrini.entities.Biglietto;
 import lorenzo.pellegrini.entities.PuntoVendita;
 import java.time.LocalDate;
+import java.util.List;
 
 public class PuntoVenditaDAO {
     private EntityManager em;
@@ -29,21 +30,6 @@ public class PuntoVenditaDAO {
         return trovato;
     }
 
-    // Metodo per vendere un biglietto
-    public void vendiBiglietto(PuntoVendita pv) {
-        // Creo il biglietto
-        Biglietto b = new Biglietto();
-        b.setDataEmissione(LocalDate.now());
-        b.setPuntoVendita(pv);
-
-        // Salvo il biglietto
-        EntityTransaction t = em.getTransaction();
-        t.begin();
-        em.persist(b);
-        t.commit();
-
-        System.out.println("Biglietto venduto da " + pv.getNome());
-    }
 
     // metodo che filtri le vendite non solo per data, ma anche per lo specifico rivenditore o distributore.
     public long countTitoliPerPuntoVendita(Long puntoVenditaId, LocalDate inizio, LocalDate fine){
@@ -54,5 +40,55 @@ public class PuntoVenditaDAO {
         query.setParameter("inizio", inizio);
         query.setParameter("fine", fine);
         return query.getSingleResult();
+    }
+
+    // controllo che il distributore funzioni
+    public void verificaStatoDelDistributore(Long idPuntoVendita) {
+
+        // cerco il punto vendita nel DB
+
+        PuntoVendita puntoVendita = em.find(PuntoVendita.class, idPuntoVendita);
+
+        if (puntoVendita != null) {
+            // se la variabile inServizio è vera allora funziona
+            if (puntoVendita.isInServizio() == true) {
+                System.out.println("Il distributore " + puntoVendita.getNome() + " è ATTIVO.");
+            } else {
+                System.out.println("Il distributore " + puntoVendita.getNome() + " è FUORI SERVIZIO.");
+            }
+        } else {
+            System.out.println("Errore: Il punto vendita con ID " + idPuntoVendita + " non esiste.");
+        }
+    }
+
+    // metodo per verificare il cambio stato attivo o in manutenzione
+    public void impostaStatoDistributore(Long idPuntoVendita, boolean nuovoStato) {
+        PuntoVendita puntoVendita = em.find(PuntoVendita.class, idPuntoVendita);
+
+        if (puntoVendita != null) {
+            em.getTransaction().begin();
+            // imposto lo stato
+            puntoVendita.setInServizio(nuovoStato);
+            em.getTransaction().commit();
+            System.out.println("Lo stato di " + puntoVendita.getNome() + " è stato aggiornato.");
+        }
+    }
+
+    // controllo lo stato prima di vendere il biglietto
+    public void vendiBiglietto(PuntoVendita puntoVendita) {
+        // Se il distributore è fuori servizio (false), non facciamo nulla
+        if (puntoVendita.isInServizio() == false) {
+            System.out.println("Impossibile vendere: il distributore è fuori servizio!");
+        } else {
+            // se il distributore è in servizio procedo alla vendiat del biglietto
+            Biglietto nuovoBiglietto = new Biglietto();
+            nuovoBiglietto.setDataEmissione(LocalDate.now());
+            nuovoBiglietto.setPuntoVendita(puntoVendita);
+
+            em.getTransaction().begin();
+            em.persist(nuovoBiglietto);
+            em.getTransaction().commit();
+            System.out.println("Biglietto emesso con successo da " + puntoVendita.getNome());
+        }
     }
 }
