@@ -70,6 +70,17 @@ public class Application {
         StatoMezzo statoMezzo = new StatoMezzo(LocalDate.now(), StatoAttuale.IN_SERVIZIO, mezzo1);
         sm.save(statoMezzo);
 
+        // -------------- MODIFICHE STATO MEZZI ----------------
+
+
+        // Cambia stato in manutenzione
+        sm.cambiaStato(mezzo1, StatoAttuale.IN_MANUTENZIONE);
+
+        // Stampa stato attuale e storico
+        System.out.println("Stato attuale mezzo: " + sm.getStatoAttuale(mezzo1));
+        System.out.println("Storico completo mezzo: " + sm.getStoricoMezzo(mezzo1));
+
+
 //------------------------------ UTENTI ----------------------------------
 
         Utente utente1 = new Utente("Alessio", "Ceccarini", "aleesio@ceccarini.it");

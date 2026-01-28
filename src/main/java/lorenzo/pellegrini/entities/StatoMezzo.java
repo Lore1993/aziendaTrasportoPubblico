@@ -72,23 +72,23 @@ public class StatoMezzo {
         this.dataFine = LocalDate.now();
     }
 
-    /**
-     * Ritorna true se questo è lo stato attualmente attivo
-     */
+
+    //Ritorna true se questo è lo stato attualmente attivo
+
     public boolean isStatoAttuale() {
         return dataFine == null;
     }
 
-    /**
-     * Ritorna true se il mezzo è in servizio
-     */
+
+    // Ritorna true se il mezzo è in servizio
+
     public boolean isInServizio() {
         return isStatoAttuale() && statoAttuale == StatoAttuale.IN_SERVIZIO;
     }
 
-    /**
-     * Ritorna true se il mezzo è in manutenzione
-     */
+
+    // Ritorna true se il mezzo è in manutenzione
+
     public boolean isInManutenzione() {
         return isStatoAttuale() && statoAttuale == StatoAttuale.IN_MANUTENZIONE;
     }
