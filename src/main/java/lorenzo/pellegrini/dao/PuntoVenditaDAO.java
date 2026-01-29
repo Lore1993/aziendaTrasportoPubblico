@@ -39,13 +39,19 @@ public class PuntoVenditaDAO {
 
 
     // metodo che filtri le vendite non solo per data, ma anche per lo specifico rivenditore o distributore.
-    public long countTitoliPerPuntoVendita(Long puntoVenditaId, LocalDate inizio, LocalDate fine){
+    public long countTitoliPerPuntoVenditaEData(Long puntoVenditaId, LocalDate inizio, LocalDate fine){
         TypedQuery<Long> query = em.createQuery("SELECT COUNT(t) FROM TitoloViaggio t " +
                 "WHERE t.puntoVendita.id = :id " +
                 "AND t.dataEmissione BETWEEN :inizio AND :fine", Long.class);
-        query.setParameter("pvId", puntoVenditaId);
+        query.setParameter("id", puntoVenditaId);
         query.setParameter("inizio", inizio);
         query.setParameter("fine", fine);
+        return query.getSingleResult();
+    }
+    public long countTitoliPerPuntoVendita(Long puntoVenditaId){
+        TypedQuery<Long> query = em.createQuery("SELECT COUNT(t) FROM TitoloViaggio t " +
+                "WHERE t.puntoVendita.id = :id " , Long.class);
+        query.setParameter("id", puntoVenditaId);
         return query.getSingleResult();
     }
 
