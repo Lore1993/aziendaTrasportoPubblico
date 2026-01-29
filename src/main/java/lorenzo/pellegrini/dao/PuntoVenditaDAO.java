@@ -96,7 +96,7 @@ public class PuntoVenditaDAO {
             em.getTransaction().begin();
             em.persist(nuovoBiglietto);
             em.getTransaction().commit();
-            System.out.println("Biglietto emesso con successo da " + puntoVendita.getNome());
+            System.out.println("Biglietto numero: "  + nuovoBiglietto.getId() + " emesso con successo da " + puntoVendita.getNome() );
         }
     }
 }
