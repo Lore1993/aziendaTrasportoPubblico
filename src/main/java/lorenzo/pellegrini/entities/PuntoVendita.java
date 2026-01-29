@@ -24,6 +24,10 @@ public abstract class PuntoVendita {
         this.nome = nome;
         this.inServizio = true;
     }
+    public PuntoVendita(String nome, boolean inServizio){
+        this.nome = nome;
+        this.inServizio = inServizio;
+    }
 
     public Long getId() {
         return id;
