@@ -33,7 +33,7 @@ public class TitoloViaggioDAO {
             }
 
         } catch (Exception e) {
-            System.err.println("Errore nel salvataggio della percorrenza: " + e.getMessage());
+            System.err.println("Errore nel salvataggio dell'acquisto: " + e.getMessage());
         }
     }
 
