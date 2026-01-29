@@ -8,6 +8,7 @@ import lorenzo.pellegrini.entities.PuntoVendita;
 import lorenzo.pellegrini.entities.Tratta;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 public class PuntoVenditaDAO {
