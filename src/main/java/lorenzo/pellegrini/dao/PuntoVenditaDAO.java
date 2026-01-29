@@ -75,7 +75,7 @@ public class PuntoVenditaDAO {
         }
     }
 
-    // metodo per verificare il cambio stato attivo o in manutenzione
+    // metodo per modificare il cambio stato attivo o in manutenzione
     public void impostaStatoDistributore(Long idPuntoVendita, boolean nuovoStato) {
         PuntoVendita puntoVendita = em.find(PuntoVendita.class, idPuntoVendita);
 
