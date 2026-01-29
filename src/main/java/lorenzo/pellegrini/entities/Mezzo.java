@@ -43,15 +43,6 @@ public class Mezzo {
         this.storicoStati.add(stato);
     }
 
-    public Mezzo(StatoAttuale statoAttuale, int capacita) {
-        this.statoAttuale = statoAttuale;
-        this.capacita = capacita;
-    }
-
-    public Mezzo(int capacita, TipoMezzo tipoMezzo) {
-        this.capacita = capacita;
-        this.tipoMezzo = tipoMezzo;
-    }
 
     public TipoMezzo getTipoMezzo() {
         return tipoMezzo;

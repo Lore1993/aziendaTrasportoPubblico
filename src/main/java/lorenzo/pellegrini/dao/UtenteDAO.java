@@ -16,8 +16,6 @@ public class UtenteDAO {
         transaction.begin();
         em.persist(utente);
         transaction.commit();
-
-        System.out.println("Salvataggio utente " +utente.getNome() + "-" + utente.getCognome() + " completato!");
     }
 
     public Utente findById(Long id) {
