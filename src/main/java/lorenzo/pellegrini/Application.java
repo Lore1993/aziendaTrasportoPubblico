@@ -260,12 +260,24 @@ public class Application {
                     puntoVenditaDAO.findAllPuntoVendita().forEach(p -> {
                         System.out.println(p.getId() + " - " + p.getNome() + " In servizio: " + p.isInServizio());
                     });
-                    int decisione = Integer.parseInt(sc.nextLine());
-                    puntoVenditaDAO.vendiBiglietto(puntoVenditaDAO.findById((long) decisione));
+                    Long decisione = Long.valueOf(sc.nextLine());
+                    PuntoVendita pv = puntoVenditaDAO.findById(decisione);
+
+                    // CORREZIONE: Controllo se il punto vendita è attivo
+                    if (pv != null && pv.isInServizio()) {
+                        puntoVenditaDAO.vendiBiglietto(pv);
+                    } else {
+                        System.out.println("ERRORE: Punto vendita non disponibile o fuori servizio!");
+                    }
                 }
                 case 3 -> {
                     System.out.println("Inserisci il numero della tessera: ");
                     String tessera = sc.nextLine();
+                    // CORREZIONE: Controllo validità tessera
+                    if (!tesseraDAO.isTesseraValida(tessera)) {
+                        System.out.println("ERRORE: Tessera scaduta o inesistente. Rinnovala prima di procedere.");
+                        break;
+                    }
                     System.out.println("Seleziona Punto Vendita:");
                     puntoVenditaDAO.findAllPuntoVendita().forEach(p -> {
                         System.out.println(p.getId() + " - " + p.getNome() + " In servizio: " + p.isInServizio());
@@ -309,7 +321,8 @@ public class Application {
             System.out.println(" 1- Crea nuovo Punto Vendita  \n 2- Crea nuovo Mezzo " +
                     "\n 3- Crea nuova Tratta \n 4- Crea nuova Percorrenza " +
                     "\n 5- Media tempo percorrenza tratte \n 6- Biglietti vidimati in un periodo di tempo " +
-                    " \n 7- Biglietti vidimati su un mezzo   \n 8- Conteggio corse totali per tratta  \n 9- Vendite totali per punto vendita \n 10- Storico mezzo  \n 0- Torna al menù principale");
+                    " \n 7- Biglietti vidimati su un mezzo   \n 8- Conteggio corse totali per tratta " +
+                    " \n 9- Vendite totali per punto vendita \n 10- Storico mezzo  \n 0- Torna al menù principale");
             scelta = Integer.parseInt(sc.nextLine());
             switch (scelta) {
                 case 1 -> {
@@ -343,18 +356,23 @@ public class Application {
                         if (funziona == 1)  {
                             Mezzo mezzo1 = new Mezzo(TipoMezzo.AUTOBUS, capienza, StatoAttuale.IN_SERVIZIO);
                             md.salvaMezzo(mezzo1);
+                            stmd.save(new StatoMezzo(LocalDate.now(), StatoAttuale.IN_SERVIZIO, mezzo1));
                         }else {
                             Mezzo mezzo1 = new Mezzo(TipoMezzo.AUTOBUS, capienza, StatoAttuale.IN_MANUTENZIONE);
                             md.salvaMezzo(mezzo1);
+                            stmd.save(new StatoMezzo(LocalDate.now(), StatoAttuale.IN_MANUTENZIONE, mezzo1));
                         }
                     } else {
                         if (funziona == 1)  {
                             Mezzo mezzo1 = new Mezzo(TipoMezzo.TRAM, capienza, StatoAttuale.IN_SERVIZIO);
                             md.salvaMezzo(mezzo1);
+                            stmd.save(new StatoMezzo(LocalDate.now(), StatoAttuale.IN_SERVIZIO, mezzo1));
                         }else {
                             Mezzo mezzo1 = new Mezzo(TipoMezzo.TRAM, capienza, StatoAttuale.IN_MANUTENZIONE);
                             md.salvaMezzo(mezzo1);
+                            stmd.save(new StatoMezzo(LocalDate.now(), StatoAttuale.IN_MANUTENZIONE, mezzo1));
                         }
+                        System.out.println("Mezzo e relativo storico salvati correttamente.");
                     }
                 }
                 case 3 -> {

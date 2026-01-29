@@ -70,4 +70,13 @@ public List<Percorrenza> findAll() {
         query.setParameter("trattaId", trattaId);
         return (long) query.getSingleResult();
     }
+    public Double getTempoMedioMezzoSuTratta(long mezzoId, long trattaId) {
+        TypedQuery<Double> query = em.createQuery(
+                "SELECT AVG(p.tempoEffettivoMinuti) FROM Percorrenza p " +
+                        "WHERE p.tratta.id = :trattaId AND p.mezzo.id = :mezzoId", Double.class);
+        query.setParameter("mezzoId", mezzoId);
+        query.setParameter("trattaId", trattaId);
+        Double avgRes = query.getSingleResult();
+        return avgRes != null ? avgRes : 0.0;
+    }
 }
