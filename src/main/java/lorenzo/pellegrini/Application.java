@@ -31,6 +31,7 @@ public class Application {
         TesseraDAO tesseraDAO = new TesseraDAO(em);
         StatoMezzoDAO statoMezzoDAO = new StatoMezzoDAO(em);
 
+
         PopolaDb(dm,pvd,td,pd);
 
         int scelta;
@@ -192,7 +193,8 @@ public class Application {
                      10- Cambia stato distributore \
                     
                      11- Report Mezzo/Tratta\s
-                     12- Storico mezzo \s
+                     12- Cambia stato mezzo \s
+                     13- Storico mezzo \s
                      0- Torna al menù principale""");
             scelta = Integer.parseInt(sc.nextLine());
             switch (scelta) {
@@ -323,9 +325,21 @@ public class Application {
                 }
                 case 12 -> {
                     md.trovaTuttiIMezzi().forEach(m -> System.out.println(m.getId() + " - " + m.getTipoMezzo()));
+                    System.out.println("Inserisci l'id del mezzo: ");
+                    long idMezzo = Long.parseLong(sc.nextLine());
+                    if ( md.trovaMezzoPerId(idMezzo).getStatoAttuale().getTipoStato() == StatoAttuale.IN_SERVIZIO) {
+                        stmd.cambiaStato(md.trovaMezzoPerId(idMezzo), StatoAttuale.IN_MANUTENZIONE);
+                    } else {
+                        stmd.cambiaStato(md.trovaMezzoPerId(idMezzo), StatoAttuale.IN_SERVIZIO);
+                    }
+                    System.out.println("Stato cambiato con successo!");
+                }
+                case 13 -> {
+                    md.trovaTuttiIMezzi().forEach(m -> System.out.println(m.getId() + " - " + m.getTipoMezzo()));
                     long idMezzo = Long.parseLong(sc.nextLine());
                     stmd.getStoricoMezzo( md.trovaMezzoPerId(idMezzo)).forEach(m -> System.out.println(m.getId() + " - " + m.getMezzo().getTipoMezzo() +
                             " --> " + m.getTipoStato() + " From " + m.getDataInizio() + " To " + m.getDataFine() ));
+
                 }
                 case 0 -> tornaIndietro = true;
                 default -> System.out.println("errore");
