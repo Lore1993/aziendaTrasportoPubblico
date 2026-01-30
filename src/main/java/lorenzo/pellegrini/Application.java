@@ -1,5 +1,6 @@
 package lorenzo.pellegrini;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -40,10 +41,19 @@ public class Application {
             System.out.println("2. Amministratore");
             System.out.println("0. Esci");
             System.out.print("Scelta: ");
+            try {
             scelta = scanner.nextInt();
+            scanner.nextLine();
             switch (scelta) {
+                case 0-> System.out.println("Chiusura applicazione in corso");
                 case 1 -> MenuUtente(dm, pvd, ud, tesseraDAO, tvd);
                 case 2 -> MenuAmministratore(tvd, pd, td, dm, statoMezzoDAO, pvd);
+                default -> System.out.println("Comando non valido");
+            }
+            }catch (InputMismatchException e) {
+               System.out.println("comando non valido");
+                scanner.nextLine();
+                scelta = -1;
             }
         } while (scelta != 0);
 
