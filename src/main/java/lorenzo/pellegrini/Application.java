@@ -24,7 +24,6 @@ public class Application {
         //-----------DAO-------------------
         DaoMezzi dm = new DaoMezzi(em);
         UtenteDAO ud = new UtenteDAO(em);
-        StatoMezzoDAO sm = new StatoMezzoDAO(em);
         PuntoVenditaDAO pvd = new PuntoVenditaDAO(em);
         TitoloViaggioDAO tvd = new TitoloViaggioDAO(em);
         PercorrenzaDAO pd = new PercorrenzaDAO(em);
@@ -32,7 +31,7 @@ public class Application {
         TesseraDAO tesseraDAO = new TesseraDAO(em);
         StatoMezzoDAO statoMezzoDAO = new StatoMezzoDAO(em);
 
-        PopolaDb(dm,pvd,td,pd,sm);
+        PopolaDb(dm,pvd,td,pd);
 
         int scelta;
         do {
@@ -60,6 +59,7 @@ public class Application {
         try {
             System.out.println("Collegameto database riuscito");
         } catch (Exception e) {
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
         } finally {
             em.close();
@@ -75,8 +75,15 @@ public class Application {
         while (!tornaIndietro) {
 
             System.out.println("------------------- Menù Utente ----------------------------");
-            System.out.println(" 1- Nuovo Utente \n 2- Nuovo Biglietto \n 3- Abbonamento " +
-                    "\n 4- Vidima biglietto \n 5- Verifica validità abbonamento \n 0- Esci");
+            System.out.println("""
+                     1- Nuovo Utente\s
+                     2- Nuovo Biglietto\s
+                     3- Abbonamento \
+                    
+                     4- Vidima biglietto\s
+                     5- Verifica validità abbonamento\s
+                     0- Esci\
+                    """);
             scelta = Integer.parseInt(sc.nextLine());
             switch (scelta) {
                 case 1 -> {
@@ -94,9 +101,7 @@ public class Application {
                 }
                 case 2 -> {
                     System.out.println("Seleziona Punto Vendita:");
-                    puntoVenditaDAO.findAllPuntoVendita().forEach(p -> {
-                        System.out.println(p.getId() + " - " + p.getNome() + " In servizio: " + p.isInServizio());
-                    });
+                    puntoVenditaDAO.findAllPuntoVendita().forEach(p -> System.out.println(p.getId() + " - " + p.getNome() + " In servizio: " + p.isInServizio()));
                     Long decisione = Long.valueOf(sc.nextLine());
                     PuntoVendita pv = puntoVenditaDAO.findById(decisione);
 
@@ -116,9 +121,7 @@ public class Application {
                         break;
                     }
                     System.out.println("Seleziona Punto Vendita:");
-                    puntoVenditaDAO.findAllPuntoVendita().forEach(p -> {
-                        System.out.println(p.getId() + " - " + p.getNome() + " In servizio: " + p.isInServizio());
-                    });
+                    puntoVenditaDAO.findAllPuntoVendita().forEach(p -> System.out.println(p.getId() + " - " + p.getNome() + " In servizio: " + p.isInServizio()));
                     long decisione = Long.parseLong(sc.nextLine());
                     PuntoVendita pv = puntoVenditaDAO.findById(decisione);
 
@@ -143,9 +146,7 @@ public class Application {
                     System.out.print("ID Biglietto: ");
                     long idbiglietto = Long.parseLong(sc.nextLine());
                     System.out.println("Seleziona Mezzo:");
-                    mezziDao.trovaMezziPerStatoAttuale(StatoAttuale.IN_SERVIZIO).forEach(m -> {
-                        System.out.println(m.getId() + " - " + m.getTipoMezzo());
-                    });
+                    mezziDao.trovaMezziPerStatoAttuale(StatoAttuale.IN_SERVIZIO).forEach(m -> System.out.println(m.getId() + " - " + m.getTipoMezzo()));
                     int decisione3 = Integer.parseInt(sc.nextLine());
                     titoloViaggioDAO.vidimaBiglietto(idbiglietto, mezziDao.trovaMezzoPerId(decisione3));
                 }
@@ -153,7 +154,12 @@ public class Application {
                     System.out.println("Inserisci il numero della tessera per il controllo: ");
                     String nt = sc.nextLine();
                     if (tesseraDAO.isTesseraValida(nt)){
-                        System.out.println("Abbonamento valido!");
+                        Abbonamento t = titoloViaggioDAO.findUltimoAbbonamento(nt);
+                      if (t.getTipoAbbonamento() == TipoAbbonamento.MENSILE){
+                          System.out.println("Abbonamento valido fino al: " + t.getDataEmissione().plusMonths(1));
+                      }else {
+                          System.out.println("Abbonamento valido fino al: " + t.getDataEmissione().plusWeeks(1));
+                      }
                     } else System.out.println("Abbonamento scaduto o non trovato!");
                 }
                 case 0 -> tornaIndietro = true;
@@ -169,12 +175,25 @@ public class Application {
         while (!tornaIndietro) {
 
             System.out.println("------------------- Pannello Admin ----------------------------");
-            System.out.println(" 1- Crea nuovo Punto Vendita  \n 2- Crea nuovo Mezzo " +
-                    "\n 3- Crea nuova Tratta \n 4- Crea nuova Percorrenza " +
-                    "\n 5- Media tempo percorrenza tratte \n 6- Biglietti vidimati in un periodo di tempo " +
-                    " \n 7- Biglietti vidimati su un mezzo   \n 8- Conteggio corse totali per tratta " +
-                    " \n 9- Vendite totali per punto vendita \n 10- Cambia stato distributore " +
-                    "\n 11- Report Mezzo/Tratta \n 12- Storico mezzo  \n 0- Torna al menù principale");
+            System.out.println("""
+                     1- Crea nuovo Punto Vendita \s
+                     2- Crea nuovo Mezzo \
+                    
+                     3- Crea nuova Tratta\s
+                     4- Crea nuova Percorrenza \
+                    
+                     5- Media tempo percorrenza tratte\s
+                     6- Biglietti vidimati in un periodo di tempo \
+                    \s
+                     7- Biglietti vidimati su un mezzo  \s
+                     8- Conteggio corse totali per tratta \
+                    \s
+                     9- Vendite totali per punto vendita\s
+                     10- Cambia stato distributore \
+                    
+                     11- Report Mezzo/Tratta\s
+                     12- Storico mezzo \s
+                     0- Torna al menù principale""");
             scelta = Integer.parseInt(sc.nextLine());
             switch (scelta) {
                 case 1 -> {
@@ -184,9 +203,8 @@ public class Application {
                         System.out.println("Inserisci il nome del distributore");
                         String nomeDist = sc.nextLine();
                         System.out.println("Il distributore automatico è in funzione? \n 1- Si \n 2- No");
-                        Long funziona = Long.valueOf(sc.nextLine());
-                        boolean attivo = false;
-                        if(funziona == 1) attivo = true;
+                        long funziona = Long.parseLong(sc.nextLine());
+                        boolean attivo = funziona == 1;
                         PuntoVendita nuovoPunto = new DistributoreAutomatico(nomeDist,attivo);
                         nuovoPunto.setInServizio(attivo);
                         pvd.save(nuovoPunto);
@@ -199,27 +217,27 @@ public class Application {
                 }
                 case 2 -> {
                     System.out.println("Di che tipo è il mezzo? \n 1- Autobus \n 2- Tram");
-                    Long tipo = Long.valueOf(sc.nextLine());
+                    long tipo = Long.parseLong(sc.nextLine());
                     System.out.println("Il mezzo è in funzione?  \n 1- Si \n 2- No");
-                    Long funziona = Long.valueOf(sc.nextLine());
+                    long funziona = Long.parseLong(sc.nextLine());
                     System.out.println("Inserisci la capienza del mezzo: ");
                     int capienza = Integer.parseInt(sc.nextLine());
                     if (tipo == 1){
+                        Mezzo mezzo1;
                         if (funziona == 1)  {
-                            Mezzo mezzo1 = new Mezzo(TipoMezzo.AUTOBUS, capienza, StatoAttuale.IN_SERVIZIO);
-                            md.salvaMezzo(mezzo1);
+                            mezzo1 = new Mezzo(TipoMezzo.AUTOBUS, capienza, StatoAttuale.IN_SERVIZIO);
                         }else {
-                            Mezzo mezzo1 = new Mezzo(TipoMezzo.AUTOBUS, capienza, StatoAttuale.IN_MANUTENZIONE);
-                            md.salvaMezzo(mezzo1);
+                            mezzo1 = new Mezzo(TipoMezzo.AUTOBUS, capienza, StatoAttuale.IN_MANUTENZIONE);
                         }
+                        md.salvaMezzo(mezzo1);
                     } else {
+                        Mezzo mezzo1;
                         if (funziona == 1)  {
-                            Mezzo mezzo1 = new Mezzo(TipoMezzo.TRAM, capienza, StatoAttuale.IN_SERVIZIO);
-                            md.salvaMezzo(mezzo1);
+                            mezzo1 = new Mezzo(TipoMezzo.TRAM, capienza, StatoAttuale.IN_SERVIZIO);
                         }else {
-                            Mezzo mezzo1 = new Mezzo(TipoMezzo.TRAM, capienza, StatoAttuale.IN_MANUTENZIONE);
-                            md.salvaMezzo(mezzo1);
+                            mezzo1 = new Mezzo(TipoMezzo.TRAM, capienza, StatoAttuale.IN_MANUTENZIONE);
                         }
+                        md.salvaMezzo(mezzo1);
                         System.out.println("Mezzo e relativo storico salvati correttamente.");
                     }
                 }
@@ -240,7 +258,7 @@ public class Application {
                     int minuti = Integer.parseInt(sc.nextLine());
                     md.trovaTuttiIMezzi().forEach(m -> System.out.println(m.getId() + " - " + m.getTipoMezzo()));
                     System.out.println("Inserisci l'id del mezzo: ");
-                    Long idMezzo = Long.valueOf(sc.nextLine());
+                    long idMezzo = Long.parseLong(sc.nextLine());
                     td.findAllTratte().forEach(t -> System.out.println(t.getId() + " - " + t.getPartenza() + " - " + t.getCapolinea()));
                     System.out.println("Inserisci l'id della tratta: ");
                     long idTratta = Long.parseLong(sc.nextLine());
@@ -266,9 +284,9 @@ public class Application {
                 }
                 case 7 -> {
                     md.trovaTuttiIMezzi().forEach(m -> System.out.println(m.getId() + " - " + m.getTipoMezzo()));
-                    Long idMezzo = Long.valueOf(sc.nextLine());
+                    long idMezzo = Long.parseLong(sc.nextLine());
                     long count1 = tvd.countVidimatiSuMezzo( md.trovaMezzoPerId(idMezzo));
-                   System.out.println("Biglietti vidimati sul mezzo: " + idMezzo + " --> " + +count1);
+                   System.out.println("Biglietti vidimati sul mezzo: " + idMezzo + " --> " + count1);
                 }
                 case 8 -> {
                     td.findAllTratte().forEach(t -> System.out.println(t.getId() + " - " + t.getPartenza() + " - " + t.getCapolinea()));
@@ -279,20 +297,16 @@ public class Application {
                 }
                 case 9 ->{
                     System.out.println("Seleziona Punto Vendita:");
-                    pvd.findAllPuntoVendita().forEach(p -> {
-                        System.out.println(p.getId() + " - " + p.getNome() + " In servizio: " + p.isInServizio());
-                    });
+                    pvd.findAllPuntoVendita().forEach(p -> System.out.println(p.getId() + " - " + p.getNome() + " In servizio: " + p.isInServizio()));
                     long decisione = Long.parseLong(sc.nextLine());
                     System.out.println("Totale vendite per punto vendita con id: " + decisione + " --> " +  pvd.countTitoliPerPuntoVendita(decisione) );
                 }
                 case 10 -> {
                     System.out.println("Seleziona Punto Vendita:");
-                    pvd.findAllPuntoVendita().forEach(p -> {
-                        System.out.println(p.getId() + " - " + p.getNome() + " In servizio: " + p.isInServizio());
-                    });
+                    pvd.findAllPuntoVendita().forEach(p -> System.out.println(p.getId() + " - " + p.getNome() + " In servizio: " + p.isInServizio()));
                     long decisione = Long.parseLong(sc.nextLine());
                     System.out.println("Inserisci il nuovo stato: \n 1- Attivo \n 2- Fuori Servizio");
-                    Long inFunzione = Long.valueOf(sc.nextLine());
+                    long inFunzione = Long.parseLong(sc.nextLine());
                     pvd.impostaStatoDistributore(decisione,(inFunzione == 1));
                 }
                 case 11 -> {
@@ -301,7 +315,7 @@ public class Application {
                     long idTratta = Long.parseLong(sc.nextLine());
                     md.trovaTuttiIMezzi().forEach(m -> System.out.println(m.getId() + " - " + m.getTipoMezzo()));
                     System.out.println("Inserisci l'id del mezzo: ");
-                    Long idMezzo = Long.valueOf(sc.nextLine());
+                    long idMezzo = Long.parseLong(sc.nextLine());
                     long numeroCorse = pd.corseMezzoSuTratta(idMezzo,idTratta);
                     Double tempoMedio = pd.getTempoMedioMezzoSuTratta(idMezzo,idTratta);
                     System.out.println("Il mezzo " + idMezzo + " ha percorso la tratta " + idTratta + " per " + numeroCorse +" volte");
@@ -309,7 +323,7 @@ public class Application {
                 }
                 case 12 -> {
                     md.trovaTuttiIMezzi().forEach(m -> System.out.println(m.getId() + " - " + m.getTipoMezzo()));
-                    Long idMezzo = Long.valueOf(sc.nextLine());
+                    long idMezzo = Long.parseLong(sc.nextLine());
                     stmd.getStoricoMezzo( md.trovaMezzoPerId(idMezzo)).forEach(m -> System.out.println(m.getId() + " - " + m.getMezzo().getTipoMezzo() +
                             " --> " + m.getTipoStato() + " From " + m.getDataInizio() + " To " + m.getDataFine() ));
                 }
@@ -321,7 +335,7 @@ public class Application {
 
     }
 
-    private static void PopolaDb(DaoMezzi dm,PuntoVenditaDAO pvd,TratteDao td,PercorrenzaDAO pd,StatoMezzoDAO sm){
+    private static void PopolaDb(DaoMezzi dm,PuntoVenditaDAO pvd,TratteDao td,PercorrenzaDAO pd){
        //Creo mezzi
         Mezzo mezzo1 = new Mezzo(TipoMezzo.AUTOBUS, 200, StatoAttuale.IN_SERVIZIO);
         Mezzo mezzo2 = new Mezzo(TipoMezzo.TRAM, 300, StatoAttuale.IN_SERVIZIO);

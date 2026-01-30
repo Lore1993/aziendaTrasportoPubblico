@@ -1,13 +1,12 @@
 package lorenzo.pellegrini.dao;
 
 import jakarta.persistence.*;
-import lorenzo.pellegrini.entities.Abbonamento;
-import lorenzo.pellegrini.entities.Biglietto;
-import lorenzo.pellegrini.entities.Mezzo;
-import lorenzo.pellegrini.entities.TitoloViaggio;
+import lorenzo.pellegrini.entities.*;
 import lorenzo.pellegrini.enums.TipoAbbonamento;
+import lorenzo.pellegrini.enums.TipoMezzo;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class TitoloViaggioDAO {
     private EntityManager em;
@@ -134,6 +133,13 @@ public class TitoloViaggioDAO {
         }
         return oggi.isBefore(scadenza) || oggi.isEqual(scadenza);
         //L'abbonamento sarà valido se la data di oggi è precedente o uguale alla data di scadenza
+    }
+
+    public List<Abbonamento> trovaAbbonamenti() {
+        return em.createQuery(
+                        "SELECT a FROM Abbonamento a ",
+                        Abbonamento.class)
+                .getResultList();
     }
 
 
